@@ -2,6 +2,7 @@ class Quiz < ApplicationRecord
   has_many :quiz_answers
 
   VALID_STATES = ['in_progress', 'completed'].freeze
+  LAST_QUESTION = 5.freeze
 
   enum state: VALID_STATES.zip(VALID_STATES).to_h
 

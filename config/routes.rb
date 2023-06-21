@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
-      resources :quizzes
+      resources :quizzes, only: [:show, :create] do
+        member do
+          post :next
+        end
+      end
     end
   end
 end
