@@ -11,7 +11,7 @@ FactoryBot.define do
     after(:create) do |question, evaluator|
       if evaluator.with_questions
         create_list(:question_option, 3, question: question)
-        create(:question, question: question, option: question.correct_answer)
+        create(:question_option, question: question, option: question.correct_answer)
       end
     end
   end
