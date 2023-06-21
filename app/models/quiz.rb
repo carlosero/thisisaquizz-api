@@ -8,14 +8,22 @@ class Quiz < ApplicationRecord
   def to_api_json
     question = Question.find_by(number: current_question)
 
-    {
-      id: id,
-      state: state,
-      question: {
-        number: question.number,
-        question: question.question,
-        options: question.question_options.pluck(:option)
+    if completed?
+      {
+        id: id,
+        state: state,
+        score: final_score
       }
-    }
+    else
+      {
+        id: id,
+        state: state,
+        question: {
+          number: question.number,
+          question: question.question,
+          options: question.question_options.pluck(:option)
+        }
+      }
+    end
   end
 end

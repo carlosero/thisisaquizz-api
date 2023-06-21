@@ -30,8 +30,8 @@ RSpec.describe 'Quizzes API', type: :request do
     end
 
     context 'when quiz is in_progress' do
-      let(:quiz) { create(:quiz, current_question: 2, state: :in_progress) }
-      let(:question_2) { create(:question, number: 2) }
+      let!(:quiz) { create(:quiz, current_question: 2, state: :in_progress) }
+      let!(:question_2) { create(:question, number: 2) }
 
       it 'returns the current quiz with its current question' do
         get "/api/v1/quizzes/#{quiz.id}"
