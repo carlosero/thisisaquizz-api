@@ -12,6 +12,12 @@ class Api::V1::QuizzesController < ApplicationController
     return render(status: :not_found) unless @quiz
 
     if params[:answer]
+      # if the user is answering but sending a response to the wrong question,
+      # return error, it might be loading on the frontend
+      if @quiz.current_question != params[:question_number].to_i
+        return render(status: :unprocessable_entity)
+      end
+
       question = Question.find_by(number: @quiz.current_question)
       QuizAnswer.create(quiz: @quiz, question: question, answer: params[:answer], score: question.score(params[:answer]))
     end

@@ -73,7 +73,7 @@ RSpec.describe 'Quizzes API', type: :request do
       context 'when there is an answer' do
 
         it 'returns quiz in_progress and the next question of the quiz' do
-          post "/api/v1/quizzes/#{quiz.id}/next", params: { answer: question_3.correct_answer }
+          post "/api/v1/quizzes/#{quiz.id}/next", params: { answer: question_3.correct_answer, question_number: 2 }
 
           expect(response).to have_http_status(:success)
 
@@ -83,6 +83,12 @@ RSpec.describe 'Quizzes API', type: :request do
           expect(json['question']['number']).to eq(3)
           expect(json['question']['question']).to eq(question_3.question)
           expect(json['question']['options']).to eq(question_3.question_options.pluck(:option))
+        end
+
+        it 'returns error 422 if the question_number response is not the current question' do
+          post "/api/v1/quizzes/#{quiz.id}/next", params: { answer: question_3.correct_answer, question_number: 4 }
+
+          expect(response).to have_http_status(:unprocessable_entity)
         end
       end
 
@@ -109,7 +115,7 @@ RSpec.describe 'Quizzes API', type: :request do
       context 'when there is an answer' do
 
         it 'returns question completed and the score of the quiz' do
-          post "/api/v1/quizzes/#{quiz.id}/next", params: { answer: question_5.correct_answer }
+          post "/api/v1/quizzes/#{quiz.id}/next", params: { answer: question_5.correct_answer, question_number: 5 }
 
           expect(response).to have_http_status(:success)
 
