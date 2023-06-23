@@ -1,6 +1,6 @@
 # This Is A Quiz - API
 
-Backend for thisisaquizz.fyi
+Backend for [thisisaquizz.fyi](https://thisisaquizz.fyi)
 
 ## Running it
 
